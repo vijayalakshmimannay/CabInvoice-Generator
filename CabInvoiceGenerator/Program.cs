@@ -8,15 +8,20 @@ namespace CabInvoiceGenerator
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Enter distance you want to Ride");
-            double input1 = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine("Enter time of your journey in minutes");
-            int input2 = Convert.ToInt32(Console.ReadLine());
-            InvoiceGenerator getMethod = new InvoiceGenerator(input1, input2);
-            double fare = getMethod.TotalFare();
-            Console.WriteLine("Fare: " + fare);
+            /* Console.WriteLine("Enter distance you want to Ride");
+                double input1 = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine("Enter time of your journey in minutes");
+                int input2 = Convert.ToInt32(Console.ReadLine());
+                InvoiceGenerator getMethod = new InvoiceGenerator(input1,input2);
+                double fare = getMethod.TotalFare();
+                Console.WriteLine("Fare: " + fare);
+               */
+            Ride[] ride = { new Ride(10, 10), new Ride(10, 5) };
+            InvoiceGenerator getMethod = new InvoiceGenerator();
+            double fare = getMethod.MultipleRides(ride);
 
         }
-
     }
+
+    
 }
