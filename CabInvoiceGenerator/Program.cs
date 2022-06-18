@@ -15,6 +15,8 @@ namespace CabInvoiceGenerator
             InvoiceGenerator getMethod = new InvoiceGenerator(input1, input2);
             double fare = getMethod.TotalFare();
             Console.WriteLine("Fare: " + fare);
+
+
         }
     }
 
