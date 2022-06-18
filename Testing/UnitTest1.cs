@@ -29,6 +29,18 @@ namespace CabInvoiceGenerator
 
          }
         */
+        /* [Test]
+         public void GivenMultipleRideData_ShouldReturnExpectedTotalFare_numberOfRides_AverageFare()
+         {
+             InvoiceGenerator fare = new InvoiceGenerator();
+             Ride[] ride = { new Ride(20, 20), new Ride(10, 5), new Ride(30, 30) };
+             double totalFare = 655, numberOfRides = ride.Length, averageFare = totalFare / numberOfRides;
+             EnhanceInvoice result = fare.MultipleRides(ride);
+             Assert.AreEqual(totalFare, result.totalFare);
+             Assert.AreEqual(averageFare, result.averageFare);
+             Assert.AreEqual(numberOfRides, result.numberOfRides);
+        */
+
         [Test]
         public void GivenMultipleRideData_ShouldReturnExpectedTotalFare_numberOfRides_AverageFare()
         {
@@ -40,6 +52,18 @@ namespace CabInvoiceGenerator
             Assert.AreEqual(averageFare, result.averageFare);
             Assert.AreEqual(numberOfRides, result.numberOfRides);
 
+        }
+        [Test]
+        public void GivenUserID_ShouldReturnExpectedTotalFare_numberOfRides_AverageFare()
+        {
+            RideRepository rideRepository = new RideRepository();
+            Ride[] ride = { new Ride(50, 50), new Ride(20, 10), new Ride(10, 10) };
+            double totalFare = 870, numberOfRides = ride.Length, averageFare = totalFare / numberOfRides;
+            rideRepository.AddRides("First", ride);
+            var result = rideRepository.UserInvoice("First");
+            Assert.AreEqual(totalFare, result.totalFare);
+            Assert.AreEqual(averageFare, result.averageFare);
+            Assert.AreEqual(numberOfRides, result.numberOfRides);
         }
     }
 }

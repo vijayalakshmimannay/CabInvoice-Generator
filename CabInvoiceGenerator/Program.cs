@@ -20,9 +20,17 @@ namespace CabInvoiceGenerator
              InvoiceGenerator getMethod = new InvoiceGenerator();
              double fare = getMethod.MultipleRides(ride);*/
 
-            InvoiceGenerator name = new InvoiceGenerator();
-            Ride[] ride = { new Ride(20, 20), new Ride(10, 5), new Ride(30, 30) };
-            EnhanceInvoice invoice = name.MultipleRides(ride);
+            /* InvoiceGenerator name = new InvoiceGenerator();
+             Ride[] ride = { new Ride(20, 20), new Ride(10, 5), new Ride(30, 30) };
+             EnhanceInvoice invoice = name.MultipleRides(ride);
+             Console.WriteLine("TotalFare: " + invoice.totalFare + "\nNumberOfRides: " + invoice.numberOfRides + "\nAverage Fare: " + invoice.averageFare);*/
+
+            RideRepository rideRepository = new RideRepository();
+            Ride[] first = { new Ride(50, 50), new Ride(20, 10), new Ride(10, 10) };
+            rideRepository.AddRides("First", first);
+            Ride[] second = { new Ride(20, 10), new Ride(10, 5), new Ride(30, 20) };
+            rideRepository.AddRides("Second", second);
+            var invoice = rideRepository.UserInvoice("First");
             Console.WriteLine("TotalFare: " + invoice.totalFare + "\nNumberOfRides: " + invoice.numberOfRides + "\nAverage Fare: " + invoice.averageFare);
 
         }
