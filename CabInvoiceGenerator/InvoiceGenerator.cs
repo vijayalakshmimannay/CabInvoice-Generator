@@ -13,31 +13,44 @@ namespace CabInvoiceGenerator
         private readonly double MINIMUM_FARE = 5;
         public double distance;
         public int time;
-        public InvoiceGenerator(double distance, int time)
-        {
-            this.distance = distance;
-            this.time = time;
-        }
-        public double TotalFare()
+        public double TotalFare(Ride ride)
         {
             double totalFare = 0;
-            if (distance >= 0 && time >= 0)
+            if (ride.distance >= 0 && ride.time >= 0)
             {
-                totalFare = distance * MINIMUM_COST_PER_KM + time * COST_PER_MINUTE;
+                totalFare = ride.distance * MINIMUM_COST_PER_KM + ride.time * COST_PER_MINUTE;
             }
             else
             {
-                if (distance <= 0)
+                if (ride.distance <= 0)
                 {
-                    throw new CustomException(CustomException.ExceptionType.INVALID_DISTANCE, "Invalid Distance");
+                    throw new InvoiceGeneratorExceptions(InvoiceGeneratorExceptions.ExceptionType.INVALID_DISTANCE, "Invalid Distance");
                 }
-                if (time < 0)
+                if (ride.time < 0)
                 {
-                    throw new CustomException(CustomException.ExceptionType.INVALID_TIME, "Invalid Time");
+                    throw new InvoiceGeneratorExceptions(InvoiceGeneratorExceptions.ExceptionType.INVALID_MINUTE, "Invalid Time");
                 }
             }
+            return Math.Max(totalFare, MINIMUM_FARE);
+        }
+        public double MultipleRides(Ride[] rides)
+        {
+            double totalFare = 0;
+            try
+            {
+                foreach (var ride in rides)
+                {
+                    totalFare += TotalFare(ride);
+                }
+            }
+            catch (InvoiceGeneratorExceptions)
+            {
+                throw new InvoiceGeneratorExceptions(InvoiceGeneratorExceptions.ExceptionType.NULL_RIDES, "Rides Are Null");
+            }
+            Console.WriteLine("Total Fare: " + totalFare);
             return totalFare;
         }
+
 
 
     }
