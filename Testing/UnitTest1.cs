@@ -10,25 +10,36 @@ namespace CabInvoiceGenerator
              CabInvoiceGenerator.InvoiceGenerator example = new CabInvoiceGenerator.InvoiceGenerator(distance, time);
              Assert.AreEqual(expected, example.TotalFare());*/
 
+        /* [Test]
+         public void GivenDistanceAndTime_ShouldReturnExpectedTotalFare()
+         {
+             double distance = 15;
+             int time = 10, expected = 160;
+             InvoiceGenerator getMethod = new InvoiceGenerator();
+             Ride ride = new Ride(distance, time);
+             Assert.AreEqual(expected, getMethod.TotalFare(ride));
+         }
+         [Test]
+         public void GivenMultipleRideData_ShouldReturnExpectedTotalFare()
+         {
+             int expected = 365;
+             InvoiceGenerator getMethod = new InvoiceGenerator();
+             Ride[] ride = { new Ride(20, 10), new Ride(15, 5) };
+             Assert.AreEqual(expected, getMethod.MultipleRides(ride));
+
+         }
+        */
         [Test]
-        public void GivenDistanceAndTime_ShouldReturnExpectedTotalFare()
+        public void GivenMultipleRideData_ShouldReturnExpectedTotalFare_numberOfRides_AverageFare()
         {
-            double distance = 15;
-            int time = 10, expected = 160;
-            InvoiceGenerator getMethod = new InvoiceGenerator();
-            Ride ride = new Ride(distance, time);
-            Assert.AreEqual(expected, getMethod.TotalFare(ride));
-        }
-        [Test]
-        public void GivenMultipleRideData_ShouldReturnExpectedTotalFare()
-        {
-            int expected = 365;
-            InvoiceGenerator getMethod = new InvoiceGenerator();
-            Ride[] ride = { new Ride(20, 10), new Ride(15, 5) };
-            Assert.AreEqual(expected, getMethod.MultipleRides(ride));
+            InvoiceGenerator fare = new InvoiceGenerator();
+            Ride[] ride = { new Ride(20, 20), new Ride(10, 5), new Ride(30, 30) };
+            double totalFare = 655, numberOfRides = ride.Length, averageFare = totalFare / numberOfRides;
+            EnhanceInvoice result = fare.MultipleRides(ride);
+            Assert.AreEqual(totalFare, result.totalFare);
+            Assert.AreEqual(averageFare, result.averageFare);
+            Assert.AreEqual(numberOfRides, result.numberOfRides);
 
         }
-
-
     }
 }
