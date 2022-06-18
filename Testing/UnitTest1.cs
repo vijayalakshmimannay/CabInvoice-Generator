@@ -41,7 +41,7 @@ namespace CabInvoiceGenerator
              Assert.AreEqual(numberOfRides, result.numberOfRides);
         */
 
-        [Test]
+        /* [Test]
         public void GivenMultipleRideData_ShouldReturnExpectedTotalFare_numberOfRides_AverageFare()
         {
             InvoiceGenerator fare = new InvoiceGenerator();
@@ -64,6 +64,23 @@ namespace CabInvoiceGenerator
             Assert.AreEqual(totalFare, result.totalFare);
             Assert.AreEqual(averageFare, result.averageFare);
             Assert.AreEqual(numberOfRides, result.numberOfRides);
+        */
+
+        [Test]
+        public void GivenRideTypes_ShouldReturnAppropriatedResults()
+        {
+            double distance = 20;
+            int time = 10, expected = 210;
+            InvoiceGenerator getMethod = new InvoiceGenerator(RideType.NORMAL);
+            Ride ride = new Ride(distance, time);
+            Assert.AreEqual(expected, getMethod.CalculateFare(ride));
+
+            double premiumDistance = 15;
+            int premiumTime = 20, premiumExpected = 265;
+            InvoiceGenerator premiumtMethod = new InvoiceGenerator(RideType.PREMIUM);
+            Ride premiumRide = new Ride(premiumDistance, premiumTime);
+            Assert.AreEqual(premiumExpected, premiumtMethod.CalculateFare(premiumRide));
         }
     }
+    
 }

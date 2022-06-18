@@ -6,14 +6,35 @@ using System.Threading.Tasks;
 
 namespace CabInvoiceGenerator
 {
+    public enum RideType { NORMAL, PREMIUM }
     public class InvoiceGenerator
     {
-        private readonly double MINIMUM_COST_PER_KM = 10;
-        private readonly int COST_PER_MINUTE = 1;
-        private readonly double MINIMUM_FARE = 5;
-        public double distance;
-        public int time;
-        public double TotalFare(Ride ride)
+        private readonly double MINIMUM_COST_PER_KM;
+        private readonly int COST_PER_MINUTE;
+        private readonly double MINIMUM_FARE;
+        public InvoiceGenerator(RideType rideType)
+        {
+            try
+            {
+                if (rideType.Equals(RideType.NORMAL))
+                {
+                    this.MINIMUM_COST_PER_KM = 10;
+                    this.COST_PER_MINUTE = 1;
+                    this.MINIMUM_FARE = 5;
+                }
+                if (rideType.Equals(RideType.PREMIUM))
+                {
+                    this.MINIMUM_COST_PER_KM = 15;
+                    this.COST_PER_MINUTE = 2;
+                    this.MINIMUM_FARE = 20;
+                }
+            }
+            catch (InvoiceGeneratorExceptions)
+            {
+                throw new InvoiceGeneratorExceptions(InvoiceGeneratorExceptions.ExceptionType.INVALID_RIDE_TYPE, "Invalid Ride Type");
+            }
+        }
+        public double CalculateFare(Ride ride)
         {
             double totalFare = 0;
             if (ride.distance >= 0 && ride.time >= 0)
@@ -33,7 +54,6 @@ namespace CabInvoiceGenerator
             }
             return Math.Max(totalFare, MINIMUM_FARE);
         }
-
         public EnhanceInvoice MultipleRides(Ride[] rides)
         {
             double totalFare = 0;
@@ -41,17 +61,15 @@ namespace CabInvoiceGenerator
             {
                 foreach (var ride in rides)
                 {
-                    totalFare += TotalFare(ride);
+                    totalFare += CalculateFare(ride);
                 }
             }
             catch (InvoiceGeneratorExceptions)
             {
                 throw new InvoiceGeneratorExceptions(InvoiceGeneratorExceptions.ExceptionType.NULL_RIDES, "Rides Are Null");
             }
-            return new(rides.Length, totalFare);
+            return new EnhanceInvoice(rides.Length, totalFare);
         }
-
-
     }
 }
 
